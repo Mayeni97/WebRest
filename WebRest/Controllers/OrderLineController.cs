@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,47 +12,47 @@ namespace WebRest.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class GendersController : ControllerBase
+    public class OrderLinesController : ControllerBase
     {
         private readonly WebRestOracleContext _context;
 
-        public GendersController(WebRestOracleContext context)
+        public OrderLinesController(WebRestOracleContext context)
         {
             _context = context;
         }
 
-        // GET: api/Genders
+        // GET: api/OrdersLines
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Gender>>> GetGenders()
+        public async Task<ActionResult<IEnumerable<OrdersLine>>> GetOrdersLines()
         {
-            return await _context.Genders.ToListAsync();
+            return await _context.OrdersLines.ToListAsync();
         }
 
-        // GET: api/Genders/5
+        // GET: api/OrdersLines/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Gender>> GetGender(string id)
+        public async Task<ActionResult<OrdersLine>> GetOrdersLine(string id)
         {
-            var gender = await _context.Genders.FindAsync(id);
+            var ordersLine = await _context.OrdersLines.FindAsync(id);
 
-            if (gender == null)
+            if (ordersLine == null)
             {
                 return NotFound();
             }
 
-            return gender;
+            return ordersLine;
         }
 
-        // PUT: api/Genders/5
+        // PUT: api/OrdersLines/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutGender(string id, Gender gender)
+        public async Task<IActionResult> PutOrdersLine(string id, OrdersLine ordersLine)
         {
-            if (id != gender.GenderId)
+            if (id != ordersLine.OrdersLineId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(gender).State = EntityState.Modified;
+            _context.Entry(ordersLine).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +60,7 @@ namespace WebRest.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!GenderExists(id))
+                if (!OrdersLineExists(id))
                 {
                     return NotFound();
                 }
@@ -73,36 +73,36 @@ namespace WebRest.Controllers
             return NoContent();
         }
 
-        // POST: api/Genders
+        // POST: api/OrdersLines
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Gender>> PostGender(Gender gender)
+        public async Task<ActionResult<OrdersLine>> PostOrdersLine(OrdersLine ordersLine)
         {
-            _context.Genders.Add(gender);
+            _context.OrdersLines.Add(ordersLine);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetGender", new { id = gender.GenderId }, gender);
+            return CreatedAtAction("GetOrdersLine", new { id = ordersLine.OrdersLineId }, ordersLine);
         }
 
-        // DELETE: api/Genders/5
+        // DELETE: api/OrdersLines/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteGender(string id)
+        public async Task<IActionResult> DeleteOrdersLine(string id)
         {
-            var gender = await _context.Genders.FindAsync(id);
-            if (gender == null)
+            var ordersLine = await _context.OrdersLines.FindAsync(id);
+            if (ordersLine == null)
             {
                 return NotFound();
             }
 
-            _context.Genders.Remove(gender);
+            _context.OrdersLines.Remove(ordersLine);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool GenderExists(string id)
+        private bool OrdersLineExists(string id)
         {
-            return _context.Genders.Any(e => e.GenderId == id);
+            return _context.OrdersLines.Any(e => e.OrdersLineId == id);
         }
     }
 }
